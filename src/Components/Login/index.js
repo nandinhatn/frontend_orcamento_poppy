@@ -16,9 +16,10 @@ const Login = ()=>{
         api.post('/api/login',{login: user, password: password}).then((res)=> {
            /*  res.data.auth ? setLogin(res.data.auth) */
             if(res.data.auth){
-                setLogin(res.data.token)
+                console.log(res)
+                setLogin(res.data)
                 localStorage.setItem("token", res.data.token)
-                navigate('/clientes');
+              navigate('/clientes'); 
             }
             console.log(res.data)
             if(!res.data.auth) {
