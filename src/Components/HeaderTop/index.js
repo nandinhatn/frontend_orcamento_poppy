@@ -30,8 +30,8 @@ const HeaderTop =()=>{
         <Menu>
             <Ul>
             
-                <Li>Clientes</Li>
-                <Li>Orçamento</Li>
+                <Li onClick={()=> navigate('/clientes')}>Clientes</Li>
+                <Li onClick={()=> navigate('/orcamentos')}>Orçamento</Li>
                 <Li onClick={()=>logout()}>Sair</Li>
             </Ul>
         </Menu>
