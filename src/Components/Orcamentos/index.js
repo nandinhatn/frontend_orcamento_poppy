@@ -3,8 +3,10 @@ import { MyContext } from '../../MyContext';
 import api from '../Data/dates'
 import { NavLink, useLocation, redirect, useNavigate } from 'react-router-dom';
 import {Container,Lines, FormInsert,Titles,ContainerPlus} from './style'
-import {FaCheck} from 'react-icons/fa'
-import {MdClose} from 'react-icons/md'
+import {FaCheck, FaPrint} from 'react-icons/fa'
+
+import {MdClose,MdPrint} from 'react-icons/md'
+
 import InsertNewClient from '../InsertNewClient';
 import UpdateClient from '../UpdateClient';
 
@@ -56,13 +58,13 @@ const Orcamentos = ()=>{
         setClientSelected(client)
         
     }
-    const deleteClient= (id)=>{
+    const deleteOrcamento= (id)=>{
         console.log('cliquei em delete')
         if(login.auth){
-            api.delete(`/api/clients/${id}`,{headers:{'x-access-token': login.token}}).catch((e)=>{
+            api.delete(`/api/orcamento/${id}`,{headers:{'x-access-token': login.token}}).catch((e)=>{
                 console.log(e)
             }).then((res)=> {
-                getClients()
+                getOrcamentos()
                })
         }
     }
@@ -74,7 +76,7 @@ const Orcamentos = ()=>{
         const month = data.getMonth()
         const year = data.getFullYear()
 
-        console.log(typeof NaN)
+      
         if(date==="0000-00-00"){
            return '- '
         }
@@ -120,6 +122,7 @@ const Orcamentos = ()=>{
         <Lines>Data de Entrega</Lines>
         <Lines></Lines>
         <Lines></Lines>
+        <Lines></Lines>
         {orcamento.map((el)=> {return(
             <>
          
@@ -140,11 +143,12 @@ const Orcamentos = ()=>{
                {formatDate(el.delivery_date)}
             </Lines>  
             <Lines>
-            <Buttons action={()=> navigate(`/updateClients/${el.id_clients}`)} type={'edit'}/>
+            <Buttons action={()=> navigate(`/updateOrcamento/${el.id_job}`)} type={'edit'}/>
             </Lines>
             <Lines>
-             <Buttons action={()=> deleteClient(el.id_clients)} type={'delete'}/>
+             <Buttons action={()=> deleteOrcamento(el.id_job)} type={'delete'}/>
             </Lines>  
+            <Lines><MdPrint/></Lines>
              </>
         )})}
           </Container>

@@ -2,11 +2,11 @@ import react,{useContext, useState, useEffect} from 'react';
 import {MyContext} from '../../MyContext'
 import {FormInsert, Input,ContainerTitle} from './style'
 import api from '../Data/dates'
-import {useNavigate} from 'react-router-dom'
+import {useNavigate, useParams} from 'react-router-dom'
 import { MdAppRegistration } from 'react-icons/md';
 
 
-const InsertNewOrcamento = (props)=>{
+const UpdateOrcamento = (props)=>{
 
     const {login ,setLogin} = useContext(MyContext)
     const [clientId,setClientId] = useState('') 
@@ -24,11 +24,12 @@ const InsertNewOrcamento = (props)=>{
     const [approved, setApproved] = useState(false)
     const [dataEvento, setDataEvento] = useState(false)
     const [win, setWin] = useState(false)
-    
+    const [orcamento, setOrcamento] = useState()
+    const {id}  = useParams()  
     const navigate= useNavigate();
-    const newOrcamento= ()=>{
+    const updateOrcamento= ()=>{
         if(login.auth){
-            api.post('/api/orcamento', {
+            api.put('/api/orcamento/', {
                 client_id: clientId, 
                 colaborators:colaborators, 
                 date_payment: datePayment,
@@ -65,6 +66,29 @@ const InsertNewOrcamento = (props)=>{
       
     }
 
+    const getOrcamento=()=>{
+        api.get(`/api/orcamento/${id}`,{headers:{'x-access-token': login.token}}).catch((e)=>{
+            console.log(e)
+        }).then((res)=>{
+            console.log(res)
+            setOrcamento(res.data.response[0])
+            setClientId(res.data.response[0].client_id)
+            setColaborators(res.data.response[0].colaborators)
+            setDatePayment(res.data.response[0].date_payment)
+            setDeliveryDate(res.data.response[0].delivery_date)
+            setDescription(res.data.response[0].description)
+            setDataEvento(res.data.response[0].date_evento)
+            setDispute(res.data.response[0].dispute)
+            setEntryDate(res.data.response[0].entry_date)
+            setIntegralValue(res.data.response[0].integral_value)
+            setMinValue(res.data.response[0].min_value)
+            setProjectName(res.data.response[0].project_name)
+            setSucessValue(res.data.response[0].sucess_value)
+            setWin(res.data.response[0].win)
+            setApproved(res.data.response[0].approved) 
+        })
+    }
+
     const getClients= ()=>{
         api.get('/api/clients', {headers: {'x-access-token': login.token}}).catch((e)=>{
             console.log((e))
@@ -75,14 +99,45 @@ const InsertNewOrcamento = (props)=>{
     }
     useEffect(()=>{
         getClients()
+        getOrcamento()
     },[])
 
-   
+    useEffect(()=>{
+
+       /*  if(orcamento){
+            setClientId(orcamento.client_id)
+            setColaborators(orcamento.colaborators)
+            setDatePayment(orcamento.date_payment)
+            setDeliveryDate(orcamento.delivery_date)
+            setDescription(orcamento.description)
+            setDataEvento(orcamento.date_evento)
+            setDispute(orcamento.dispute)
+            setEntryDate(orcamento.entry_date)
+            setIntegralValue(orcamento.integral_value)
+            setMinValue(orcamento.min_value)
+            setProjectName(orcamento.project_name)
+            setSucessValue(orcamento.sucess_value)
+            setWin(orcamento.win)
+            setApproved(orcamento.approved) 
+        } */
+        
+    /*     
+       
+       
+        
+       
+        */
+        console.log(orcamento)
+    },[orcamento])
+
+    useEffect(()=>{
+        console.log(win) 
+    },[win])
     
     return(
         <>
             <FormInsert>
-                <ContainerTitle>Inserir Orçamento</ContainerTitle>
+                <ContainerTitle>Alterar Orçamento</ContainerTitle>
 Nome do Cliente:
 <select onClick={(e)=> setClientId(e.target.value)}>
         {listClients.length>0? 
@@ -138,9 +193,9 @@ Orçamento Aprovado?
 
 
 
-<button onClick={()=> newOrcamento()} > Insert</button>
+<button onClick={()=> updateOrcamento()} > Insert</button>
 </FormInsert>
         </>
     )
 }
-export default InsertNewOrcamento;
+export default UpdateOrcamento;

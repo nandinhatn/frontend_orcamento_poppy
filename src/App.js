@@ -7,6 +7,7 @@ import Clients from './Components/Clients';
 import UpdateClient from './Components/UpdateClient';
 import Orcamentos from './Components/Orcamentos';
 import InsertOrcamento from './Components/InsertNewOrcamento';
+import UpdateOrcamento from './Components/UpdateOrcamento';
 function App() {
 
     const [login,setLogin] = useState([])
@@ -25,6 +26,7 @@ function App() {
           <Route  path='/updateClients/:id' element={<UpdateClient/>} />
           <Route  path='/orcamentos' element={<Orcamentos/>} />
           <Route  path='/insertOrcamento' element={<Orcamentos/>} />
+          <Route  path='/updateOrcamento/:id' element={<UpdateOrcamento/>} />
          
         </Routes>
       </div>
