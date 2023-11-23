@@ -5,7 +5,7 @@ import api from '../Data/dates'
 import {useNavigate} from 'react-router-dom'
 
 
-const InsertNewClient = (props)=>{
+const InsertOrcamento = (props)=>{
 
     const {login ,setLogin} = useContext(MyContext)
     const [name,setName] = useState('') 
@@ -47,4 +47,4 @@ const InsertNewClient = (props)=>{
         </>
     )
 }
-export default InsertNewClient;
+export default InsertNewOrcamento;
