@@ -3,10 +3,14 @@ import { MyContext } from '../../MyContext';
 import api from '../Data/dates'
 import { NavLink, useLocation, redirect, useNavigate } from 'react-router-dom';
 import {Container,Lines, FormInsert,Titles,ContainerPlus} from './style'
+import {FaCheck} from 'react-icons/fa'
+import {MdClose} from 'react-icons/md'
 import InsertNewClient from '../InsertNewClient';
 import UpdateClient from '../UpdateClient';
 
 import Buttons from '../Buttons'
+
+import InsertNewOrcamento from '../InsertNewOrcamento';
 const Orcamentos = ()=>{
     const {login ,setLogin} = useContext(MyContext)
     const [orcamento, setOrcamento] = useState([])
@@ -91,7 +95,7 @@ const Orcamentos = ()=>{
 
             <Buttons action={()=> setExibInsert(!exibInsert)}type="close"/>
             </ContainerPlus>
-            {<InsertNewClient getClients={getOrcamentos}/>}
+            {<InsertNewOrcamento/>}
         </> : ''}
 
        
@@ -118,7 +122,7 @@ const Orcamentos = ()=>{
                 {formatDate(el.entry_date)}
             </Lines>
             <Lines>
-                    {el.approved}
+                    { el.approved===0 ? <MdClose/>: <FaCheck/>}
             </Lines>  
             <Lines>
             <Buttons action={()=> navigate(`/updateClients/${el.id_clients}`)} type={'edit'}/>
