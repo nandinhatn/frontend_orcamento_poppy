@@ -3,12 +3,13 @@ import {MyContext} from '../../MyContext'
 import {FormInsert, Input,ContainerTitle} from './style'
 import api from '../Data/dates'
 import {useNavigate} from 'react-router-dom'
+import { MdAppRegistration } from 'react-icons/md';
 
 
 const InsertNewOrcamento = (props)=>{
 
     const {login ,setLogin} = useContext(MyContext)
-    const [clientName,setClientName] = useState('') 
+    const [clientId,setClientId] = useState('') 
     const [colaborators,setColaborators] = useState('') 
     const [datePayment,setDatePayment] = useState('') 
     const [description,setDescription] = useState('') 
@@ -21,19 +22,37 @@ const InsertNewOrcamento = (props)=>{
     const [sucessValue, setSucessValue] = useState('') 
     const [listClients, setListClients] = useState('')
     const [approved, setApproved] = useState(false)
+    const [dataEvento, setDataEvento] = useState(false)
     const [win, setWin] = useState(false)
     
     const navigate= useNavigate();
-    const newClient= ()=>{
+    const newOrcamento= ()=>{
         if(login.auth){
-            api.post('/api/clients', {client_name: name, cnpj:cnpj, email:email}, {headers:{ 'x-access-token': `${login.token}`}}).catch((e)=>{
+            api.post('/api/orcamento', {
+                client_id: clientId, 
+                colaborators:colaborators, 
+                date_payment: datePayment,
+                delivery_date: deliveryDate,
+                date_evento: dataEvento,
+                description: description,
+                dispute: dispute,
+                entry_date: entry_date,
+                integral_value: integralValue,
+                min_value: minValue,
+                project_name: projectName,
+                win: win,
+                approved: approved,
+                sucess_value: sucessValue
+
+            }, {headers:{ 'x-access-token': `${login.token}`}}).catch((e)=>{
                 console.log(e)
             }).then((res)=>{
                 console.log(res)
                 
                 if(res.status===200){
                     console.log('inserido com sucesso')
-                    props.getClients()
+                    props.getOrcamentos()
+                  
                  
                 }
             })
@@ -57,13 +76,17 @@ const InsertNewOrcamento = (props)=>{
     useEffect(()=>{
         getClients()
     },[])
+
+    useEffect(()=>{
+        console.log(win) 
+    },[win])
     
     return(
         <>
             <FormInsert>
                 <ContainerTitle>Inserir Orçamento</ContainerTitle>
 Nome do Cliente:
-<select onClick={(e)=> setClientName(e.target.value)}>
+<select onClick={(e)=> setClientId(e.target.value)}>
         {listClients.length>0? 
         
         <>
@@ -88,17 +111,36 @@ Data de Pagamento :
 Data de Entrega:
 <Input type='date' value={deliveryDate} onChange={(e)=> setDeliveryDate(e.target.value) }/>
 Descrição do Job:
-<textarea value={description} onChange={(e)=> setDescription(e.target.value)}></textarea>
+<textarea rows={10} value={description} onChange={(e)=> setDescription(e.target.value)}></textarea>
 Concorrência:
-<input type='checkbox' value={dispute} onChange={(e)=> setDispute(e.target.value)} />
-<Input value={integralValue} onChange={(e)=> setIntegralValue(e.target.value)} placeholder='Valor do Job Integral'/>
+<input type='checkbox' checked={dispute} onChange={(e)=> setDispute(!dispute)} />
+{/* o valor do integral esconde */}
+{dispute? 
+<>
+
 <Input value={minValue} onChange={(e)=> setMinValue(e.target.value)} placeholder='Valor Job Mínimo'/>
 <Input value={sucessValue} onChange={(e)=> setSucessValue(e.target.value)} placeholder='Valor do Job Máximo'/>
-Orçamento Aprovado?
-<Input type="checkbox" value={approved} onChange={(e)=> setApproved(e.target.value)} />
 Concorrência venceu?
-<Input type="checkbox" value={win} onChange={(e)=> setWin(e.target.value)} />
-<button onClick={()=> newClient()} > Insert</button>
+<Input type="checkbox" checked={win} onChange={(e)=> setWin(!win)} />
+{win? 
+<>
+Data do Evento:
+<Input type="date" value={dataEvento} onChange={(e)=> setDataEvento(e.target.value)}/>
+</> 
+: ''}
+
+</>
+: <Input value={integralValue} onChange={(e)=> setIntegralValue(e.target.value)} placeholder='Valor do Job Integral'/>}
+
+
+
+Orçamento Aprovado?
+<Input type="checkbox" checked={approved} onChange={(e)=> setApproved(!approved)} />
+
+
+
+
+<button onClick={()=> newOrcamento()} > Insert</button>
 </FormInsert>
         </>
     )

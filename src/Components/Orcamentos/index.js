@@ -68,11 +68,21 @@ const Orcamentos = ()=>{
     }
 
     const formatDate=(date)=>{
+        
         const data = new Date(date)
         const day = data.getDate()
         const month = data.getMonth()
         const year = data.getFullYear()
-        return `${day}/${month}/${year}`;
+
+        console.log(typeof NaN)
+        if(date==="0000-00-00"){
+           return '- '
+        }
+        else{
+            return `${day}/${month}/${year}`;
+        }
+       
+        
     }
     useEffect(()=>{
         getOrcamentos()
@@ -95,7 +105,7 @@ const Orcamentos = ()=>{
 
             <Buttons action={()=> setExibInsert(!exibInsert)}type="close"/>
             </ContainerPlus>
-            {<InsertNewOrcamento/>}
+            {<InsertNewOrcamento getOrcamentos={getOrcamentos}/>}
         </> : ''}
 
        
@@ -107,6 +117,7 @@ const Orcamentos = ()=>{
         <Lines>Nome do Projeto</Lines>
         <Lines>Data de Entrada</Lines>
         <Lines>Aprovado</Lines>
+        <Lines>Data de Entrega</Lines>
         <Lines></Lines>
         <Lines></Lines>
         {orcamento.map((el)=> {return(
@@ -119,10 +130,14 @@ const Orcamentos = ()=>{
                 {el.project_name}
             </Lines>  
             <Lines>
-                {formatDate(el.entry_date)}
+                {el.entry_date? formatDate(el.entry_date): ''}
+               
             </Lines>
             <Lines>
                     { el.approved===0 ? <MdClose/>: <FaCheck/>}
+            </Lines>
+            <Lines>
+               {formatDate(el.delivery_date)}
             </Lines>  
             <Lines>
             <Buttons action={()=> navigate(`/updateClients/${el.id_clients}`)} type={'edit'}/>
