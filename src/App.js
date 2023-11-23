@@ -4,6 +4,7 @@ import {MyContext} from  './MyContext'
 import {createBrowserRouter, Routes, BrowserRouter, Route} from "react-router-dom"
 import Login from './Components/Login';
 import Clients from './Components/Clients';
+import UpdateClient from './Components/UpdateClient';
 function App() {
 
     const [login,setLogin] = useState([])
@@ -19,6 +20,7 @@ function App() {
         <Routes>
           <Route index path='/login' element={<Login/>} />
           <Route  path='/clientes' element={<Clients/>} />
+          <Route  path='/updateClients/:id' element={<UpdateClient/>} />
          
         </Routes>
       </div>

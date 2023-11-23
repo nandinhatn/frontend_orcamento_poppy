@@ -15,3 +15,14 @@ export const Lines = styled.div`
 border-bottom: 1px solid black;
 `;
 
+export const Titles = styled.div`
+display: flex;
+justify-content: center;
+align-items: center;
+margin-top: 20px;
+`;
+export const ContainerPlus = styled.div`
+display:flex;
+justify-content: end;
+`;
+

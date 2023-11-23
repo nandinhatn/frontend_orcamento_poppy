@@ -2,14 +2,18 @@ import react, {useContext, useEffect, useState} from 'react';
 import { MyContext } from '../../MyContext';
 import api from '../Data/dates'
 import { NavLink, useLocation, redirect, useNavigate } from 'react-router-dom';
-import {Container,Lines, FormInsert} from './style'
+import {Container,Lines, FormInsert,Titles,ContainerPlus} from './style'
 import InsertNewClient from '../InsertNewClient';
-import {FaEdit,FaTrash} from 'react-icons/fa'
+import UpdateClient from '../UpdateClient';
+
 import Buttons from '../Buttons'
 const Clients = ()=>{
     const {login ,setLogin} = useContext(MyContext)
     const [client, setClient] = useState([])
     const [exibInsert, setExibInsert] = useState(false)
+    const [exibUpdate, setExibUpdate] = useState(false)
+    const [idUpdate, setIdUpdate] = useState()
+    const [clientSelected, setClientSelected] = useState()
 
     const [token, setToken] = useState(localStorage.getItem('bearer'))
     const navigate = useNavigate();
@@ -38,9 +42,14 @@ const Clients = ()=>{
 
     const insertNewClient = ()=>{
         setExibInsert(true)
+        setExibUpdate(false)
     }
-    const editClient= ()=>{
-        console.log('cliquei no edit')
+  
+    const editClient= (id, client)=>{
+        setIdUpdate(id)
+        setExibInsert(false)
+        setExibUpdate(true)
+        setClientSelected(client)
         
     }
     const deleteClient= (id)=>{
@@ -50,7 +59,7 @@ const Clients = ()=>{
                 console.log(e)
             }).then((res)=> {
                 getClients()
-                console.log(res)})
+               })
         }
     }
 
@@ -62,16 +71,23 @@ const Clients = ()=>{
 
     return(
         <>
-        <div>Clientes
+        <Titles>Clientes</Titles>
            
-        </div>
-
-        <div onClick={()=> insertNewClient()}>Inserir novo Cliente</div>
-
-        {exibInsert? <>
+      
+        <ContainerPlus>
+        {!exibInsert? <Buttons action={()=> insertNewClient()}type="add"/> : ''}
         
+        </ContainerPlus>
+       
+        {exibInsert? <>
+            <ContainerPlus>
+
+            <Buttons action={()=> setExibInsert(!exibInsert)}type="close"/>
+            </ContainerPlus>
             {<InsertNewClient getClients={getClients}/>}
         </> : ''}
+
+       
         {client?  <>
         
         <Container>
@@ -95,7 +111,7 @@ const Clients = ()=>{
                 {el.cnpj}
             </Lines>
             <Lines>
-            <Buttons action={()=> editClient()} type={'edit'}/>
+            <Buttons action={()=> navigate(`/updateClients/${el.id_clients}`)} type={'edit'}/>
             </Lines>  
             <Lines>
 
