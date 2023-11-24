@@ -1,9 +1,11 @@
-import react, {useContext, useEffect, useState} from 'react';
+import react, {useContext, useEffect, useState, useRef} from 'react';
 import {useParams, useNavigate} from 'react-router-dom'
 import {MyContext} from '../../MyContext'
 import Logo from '../../Assets/logopoppyalta-copy.png'
 import api from '../Data/dates'
 import { Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
+import SignatureCanvas from 'react-signature-canvas'
+import generatePDF, { Options } from "react-to-pdf";
 import {
     Container, 
     ContainerHeader,
@@ -13,13 +15,36 @@ import {
     ImageLogo,
     ContainerContent, 
     ContainerOrcamento,
-    ContainerValues
+    ContainerValues,
+    Title
 } from './style'
+
+const  options = {
+    filename: "using-function.pdf",
+    page: {
+      margin: 20
+    }
+  };
+  const getTargetElement = () => document.getElementById("container");
+
+const downloadPdf = () => generatePDF(getTargetElement, options);
+  
 const Imprimir= ()=>{
     const {id} = useParams()
     const navigate = useNavigate()
     const {login ,setLogin} = useContext(MyContext)
     const [orcamento, setOrcamento] = useState();
+    const [client, setClient] = useState()
+
+    const sigRef = useRef();
+    const [signature, setSignature] = useState(null);
+  const handleSignatureEnd = () => {
+    setSignature(sigRef.current.toDataURL());
+  }
+  const clearSignature = () => {
+    sigRef.current.clear();
+    setSignature(null);
+  }
 
     const getOrcamento = ()=>{
         api.get(`/api/orcamento/${id}`, {headers:{'x-access-token': login.token}}).catch((e)=>{
@@ -27,24 +52,48 @@ const Imprimir= ()=>{
         }).then((res)=> {
             console.log(res)
             setOrcamento(res.data.response[0])
+            
         })
         
     }
+    const getClients = (id)=>{
+        api.get(`/api/clients/${id}`,{headers:{'x-access-token': login.token}}).catch((e)=>{
+            console.log(e)
+        }).then((res)=>{
+            console.log(res)
+            setClient(res.data.response[0])
+        })
+    }
+
+
     useEffect(()=>{
         getOrcamento()
     },[])
+    useEffect(()=>{
+        if(orcamento){
+           
+
+            getClients(orcamento.client_id)
+        }
+    },[orcamento])
+
+    useEffect(() => {
+        console.log(signature);
+      }, [signature]);
     return(
         <>
         {orcamento?
          <>
+         <div id="container">
          <Container>
             <ContainerHeader>
             <ContainerLogo>
                 <ImageLogo src={Logo}/>
             </ContainerLogo>
             <ContainerNumber>
-                Orçamento n.º
+            
                 <NumberOrc>
+                Orçamento n.º
                 400{orcamento.id_job}
                 </NumberOrc>
          
@@ -52,22 +101,61 @@ const Imprimir= ()=>{
             </ContainerHeader>
             <ContainerContent>
                 <ContainerOrcamento>
-
-                </ContainerOrcamento>
-               <div>Empresa</div> :
-               <div>Dado da empresa</div>
+                <div>Empresa</div> 
+               <ContainerValues>{client ? <>
+               {client.client_name}
+               </> : ''}</ContainerValues>
                <div>CNPJ</div>
-               <div>DadoCNPJ</div>
+               <ContainerValues>{client? 
+               <>
+               {client.cnpj}
+               </>
+               :
+               ''
+            }</ContainerValues>
+                <div>Nome do Projeto</div>
+                <ContainerValues>{orcamento.project_name}</ContainerValues>
                <div>Escopo do Projeto</div>
-               <div>Descrição do Projeto</div>
+               <ContainerValues>{orcamento.description}</ContainerValues>
                <div>Data de Entrega</div>
-               <div>dados da data de entrega</div>
-               <div>Valorees</div>
+               <ContainerValues>{orcamento.delivery_date}</ContainerValues>
+             
+                </ContainerOrcamento>
+
+               
+                <Title>Valores</Title>
+              
+                <ContainerOrcamento>
+                {!orcamento.dispute? <>
+                    <div>Valor Integral</div> 
+               <ContainerValues>{orcamento.integral_value}</ContainerValues>
+                
+                </> : <>
+                <div>Valor Mínimo</div>
+                <ContainerValues>{orcamento.min_value}</ContainerValues>
+                <div>Valor Máximo</div>
+                <ContainerValues>{orcamento.sucess_value}</ContainerValues>
+                
+                </>}
+                <div>Data de Pagamento</div>
+                <ContainerValues>{orcamento.date_payment}</ContainerValues>
+               
+                </ContainerOrcamento>
             </ContainerContent>
+            <div>
+
+            <SignatureCanvas 
+      penColor="black"
+      canvasProps={{className: 'signature'}}
+      ref={sigRef}
+      onEnd={handleSignatureEnd}
+    />
+            Fernanda Teixeira Nogueira Lisboa
+            </div>
            </Container>
-        
+           </div>
         </> :''}
-       
+        <button onClick={downloadPdf}>Download PDF</button>
         </>
     )
 }

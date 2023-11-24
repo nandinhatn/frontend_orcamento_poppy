@@ -34,8 +34,10 @@ padding: 20px;
 export const NumberOrc = styled.div`
 font-size: 30px;
 display: flex;
+width: 200px;
 padding: 20px;
 align-items: center;
+justify-content: right;
 border: 1px solid black;
 `;
 
@@ -44,14 +46,26 @@ height: 80px;
 `;
 
 export const ContainerContent = styled.div`
-border-top: 1px solid black;
+border: 1px solid black;
+margin: 20px;
 `;
 export const ContainerOrcamento = styled.div`
 display: grid;
-grid-template-columns: 2fr 2fr;
+grid-template-columns: 2fr 8fr;
 padding: 20px;
 
 `;
 export const ContainerValues = styled.div`
+display: flex;
+align-items: center;
+
 border-bottom: 1px solid black;
+`;
+export const Title = styled.div`
+display: flex;
+justify-content: center;
+font-weight: bold;
+background-color: gray;
+margin: 10px;
+padding: 10px 10px 10px 10px;
 `;
