@@ -3,6 +3,8 @@ import styled from "styled-components";
 export const Container = styled.div`
 border: 1px solid black;
 margin-top: 40px;
+margin-bottom:40px;
+width: 800px;
 
 
 `;
@@ -53,6 +55,7 @@ export const ContainerOrcamento = styled.div`
 display: grid;
 grid-template-columns: 2fr 8fr;
 padding: 20px;
+margin-bottom: 40px;
 
 `;
 export const ContainerValues = styled.div`
@@ -68,4 +71,16 @@ font-weight: bold;
 background-color: gray;
 margin: 10px;
 padding: 10px 10px 10px 10px;
+`;
+
+export const ContainerSignatures = styled.div`
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+
+`;
+export const ContainerSignaturesName = styled.div`
+border-top: 1px solid black;
+margin-bottom: 40px;
 `;
