@@ -5,6 +5,9 @@ border: 1px solid black;
 margin-top: 40px;
 margin-bottom:40px;
 width: 800px;
+font-family: Verdana, Geneva, Tahoma, sans-serif;
+font-weight: 300;
+font-size: 14px;
 
 
 `;
@@ -34,13 +37,14 @@ padding: 20px;
 `;
 
 export const NumberOrc = styled.div`
-font-size: 30px;
+font-size: 25px;
 display: flex;
-width: 200px;
-padding: 20px;
+
+padding: 20px 40px 20px 40px;
 align-items: center;
-justify-content: right;
+justify-content: center;
 border: 1px solid black;
+margin-top: 10px;
 `;
 
 export const ImageLogo = styled.img`
@@ -79,8 +83,19 @@ flex-direction: column;
 align-items: center;
 justify-content: center;
 
+
+
 `;
 export const ContainerSignaturesName = styled.div`
 border-top: 1px solid black;
 margin-bottom: 40px;
 `;
+
+
+export const ContainerButtons = styled.div`
+display: flex;
+justify-content: center;
+width: 800px;
+gap: 20px;
+`;
+

@@ -18,11 +18,12 @@ import {
     ContainerValues,
     Title,
     ContainerSignatures,
-    ContainerSignaturesName
+    ContainerSignaturesName,
+    ContainerButtons
 } from './style'
 
 
-
+import ButtonDefault from '../ButtonsDefault';
   
 const Imprimir= ()=>{
     const {id} = useParams()
@@ -41,7 +42,8 @@ const Imprimir= ()=>{
   const  options = {
     filename: ""+fileName + ".pdf",
     page: {
-      margin: 20
+      margin: 20,
+      format:'letter'
     }
   };
   const getTargetElement = () => document.getElementById("container");
@@ -104,10 +106,16 @@ const Imprimir= ()=>{
             <ContainerLogo>
                 <ImageLogo src={Logo}/>
             </ContainerLogo>
+            <ContainerLogo>
+                Poppy Web e 3d Ltda.<br></br>
+                fernanda@poppymidia.com.br
+                <br></br>
+                Telefone: 1196974-8216
+            </ContainerLogo>
             <ContainerNumber>
-            
+            Orçamento n.º
                 <NumberOrc>
-                Orçamento n.º
+             
                 400{orcamento.id_job}
                 </NumberOrc>
          
@@ -156,14 +164,24 @@ const Imprimir= ()=>{
                
                 </ContainerOrcamento>
             </ContainerContent>
+
+            <ContainerContent>
+                <div> 1. Obs: O orçamento é válido por 15 dias</div>
+                <div> 2. O prazo definido nesta proposta é válido para data atual</div>
+                <div> 3. Após 7 dias da entrega do projeto, alterações e revisões estarão sujeitas a cobranças adicionais</div>
+            </ContainerContent>
             <div>
                 <ContainerSignatures>
+                    <div >
+
+                    
                 <SignatureCanvas 
+                
       penColor="black"
       canvasProps={{className: 'signature'}}
       ref={sigRef}
       onEnd={handleSignatureEnd}
-    />
+    /></div>
     <ContainerSignaturesName>
     Fernanda Teixeira Nogueira Lisboa
 
@@ -172,11 +190,16 @@ const Imprimir= ()=>{
           
             
             </div>
+            
            </Container>
+          
            </div>
         </> :''}
-        <button onClick={downloadPdf}>Download PDF</button>
-        <button onClick={()=> clearSignature()}>Limpar Assinatura</button>
+        <ContainerButtons>
+
+        <ButtonDefault title={"Donwlod Orçamento PDF"} action={downloadPdf}/>
+        <ButtonDefault title={"Limpar Assinatura"} action={()=>clearSignature()}/>
+        </ContainerButtons>
         </>
     )
 }
