@@ -8,6 +8,7 @@ import UpdateClient from './Components/UpdateClient';
 import Orcamentos from './Components/Orcamentos';
 import InsertOrcamento from './Components/InsertNewOrcamento';
 import UpdateOrcamento from './Components/UpdateOrcamento';
+import Imprimir from './Components/Imprimir';
 function App() {
 
     const [login,setLogin] = useState([])
@@ -27,6 +28,7 @@ function App() {
           <Route  path='/orcamentos' element={<Orcamentos/>} />
           <Route  path='/insertOrcamento' element={<Orcamentos/>} />
           <Route  path='/updateOrcamento/:id' element={<UpdateOrcamento/>} />
+          <Route  path='/imprimir/:id' element={<Imprimir/>} />
          
         </Routes>
       </div>

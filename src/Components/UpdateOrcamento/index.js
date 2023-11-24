@@ -26,10 +26,11 @@ const UpdateOrcamento = (props)=>{
     const [win, setWin] = useState(false)
     const [orcamento, setOrcamento] = useState()
     const {id}  = useParams()  
+    const [msg, setMsg] = useState()
     const navigate= useNavigate();
     const updateOrcamento= ()=>{
         if(login.auth){
-            api.put('/api/orcamento/', {
+            api.put(`/api/orcamento/${id}`, {
                 client_id: clientId, 
                 colaborators:colaborators, 
                 date_payment: datePayment,
@@ -52,7 +53,7 @@ const UpdateOrcamento = (props)=>{
                 
                 if(res.status===200){
                     console.log('inserido com sucesso')
-                    props.getOrcamentos()
+                    setMsg("Orçamento alterado com sucesso")
                   
                  
                 }
@@ -134,6 +135,20 @@ const UpdateOrcamento = (props)=>{
         console.log(win) 
     },[win])
     
+    const formatDate=(data)=>{  
+      
+        const date = new Date(data);
+        const day = date.getDate();
+        const month = date.getMonth();
+        const year = date.getFullYear()
+
+        console.log(day + "," + month + ", " + year )
+        
+        const dateFormated = `${year}-${month}-${day}`
+        console.log(dateFormated)
+       
+        return dateFormated
+    }
     return(
         <>
             <FormInsert>
@@ -158,11 +173,11 @@ Nome do Cliente:
 <Input value={projectName} onChange={(e)=> setProjectName(e.target.value)} placeholder='Nome do Projeto'/>
 <Input value={colaborators} onChange={(e)=> setColaborators(e.target.value)} placeholder='Colaborador' />
 Data de Entrada:
-<Input type='date'value={entry_date} onChange={(e)=> setEntryDate(e.target.value)} placeholder='Data de Entrada' />
+<Input type='date'value={formatDate(entry_date)} onChange={(e)=> setEntryDate(e.target.value)} placeholder='Data de Entrada' />
 Data de Pagamento :
-<Input type='date'value={datePayment} onChange={(e)=> setDatePayment(e.target.value)} placeholder='Data de Pagamento' />
+<Input type='date'value={formatDate(datePayment)} onChange={(e)=> setDatePayment(e.target.value)} placeholder='Data de Pagamento' />
 Data de Entrega:
-<Input type='date' value={deliveryDate} onChange={(e)=> setDeliveryDate(e.target.value) }/>
+<Input type='date' value={formatDate(deliveryDate)} onChange={(e)=> setDeliveryDate(e.target.value) }/>
 Descrição do Job:
 <textarea rows={10} value={description} onChange={(e)=> setDescription(e.target.value)}></textarea>
 Concorrência:
@@ -178,7 +193,7 @@ Concorrência venceu?
 {win? 
 <>
 Data do Evento:
-<Input type="date" value={dataEvento} onChange={(e)=> setDataEvento(e.target.value)}/>
+<Input type="date" value={formatDate(dataEvento)} onChange={(e)=> setDataEvento(e.target.value)}/>
 </> 
 : ''}
 
@@ -193,8 +208,10 @@ Orçamento Aprovado?
 
 
 
-<button onClick={()=> updateOrcamento()} > Insert</button>
+<button onClick={()=> updateOrcamento()} > Alterar Orçamento</button>
+<button onClick={()=> navigate('/orcamento')} > Voltar</button>
 </FormInsert>
+<p>{msg}</p>
         </>
     )
 }

@@ -148,7 +148,7 @@ const Orcamentos = ()=>{
             <Lines>
              <Buttons action={()=> deleteOrcamento(el.id_job)} type={'delete'}/>
             </Lines>  
-            <Lines><MdPrint/></Lines>
+            <Lines><MdPrint onClick={()=> navigate(`/imprimir/${el.id_job}`)}/></Lines>
              </>
         )})}
           </Container>
