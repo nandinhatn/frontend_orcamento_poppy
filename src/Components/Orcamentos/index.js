@@ -2,7 +2,13 @@ import react, {useContext, useEffect, useState} from 'react';
 import { MyContext } from '../../MyContext';
 import api from '../Data/dates'
 import { NavLink, useLocation, redirect, useNavigate } from 'react-router-dom';
-import {Container,Lines, FormInsert,Titles,ContainerPlus} from './style'
+import {
+    Container,
+    Lines, 
+    Titles,
+    ContainerPlus,
+    ContainerTitles
+} from './style'
 import {FaCheck, FaPrint} from 'react-icons/fa'
 
 import {MdClose,MdPrint} from 'react-icons/md'
@@ -94,14 +100,13 @@ const Orcamentos = ()=>{
 
     return(
         <>
+        <ContainerTitles>
+
         <Titles>Orçamentos</Titles>
-           
-      
         <ContainerPlus>
         {!exibInsert? <Buttons action={()=> insertNewClient()}type="add"/> : ''}
         
         </ContainerPlus>
-       
         {exibInsert? <>
             <ContainerPlus>
 
@@ -120,9 +125,9 @@ const Orcamentos = ()=>{
         <Lines>Data de Entrada</Lines>
         <Lines>Aprovado</Lines>
         <Lines>Data de Entrega</Lines>
-        <Lines></Lines>
-        <Lines></Lines>
-        <Lines></Lines>
+        <Lines>Alterar</Lines>
+        <Lines>Excluir</Lines>
+        <Lines>Imprimir</Lines>
         {orcamento.map((el)=> {return(
             <>
          
@@ -148,7 +153,9 @@ const Orcamentos = ()=>{
             <Lines>
              <Buttons action={()=> deleteOrcamento(el.id_job)} type={'delete'}/>
             </Lines>  
-            <Lines><MdPrint onClick={()=> navigate(`/imprimir/${el.id_job}`)}/></Lines>
+            <Lines>
+                <Buttons type={'print'} action={()=> navigate(`/imprimir/${el.id_job}`)}/>
+               </Lines>
              </>
         )})}
           </Container>
@@ -159,6 +166,12 @@ const Orcamentos = ()=>{
            
 
         </div>
+        </ContainerTitles>
+           
+      
+      
+       
+      
         </>
     )
 

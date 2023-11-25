@@ -11,6 +11,7 @@ width: 100%;
 display: flex;
 gap: 10px;
 align-items: center;
+justify-content: center;
 cursor: pointer;
 border: none;
 padding: 10px 20px 10px 20px;
