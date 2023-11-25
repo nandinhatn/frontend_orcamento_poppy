@@ -9,6 +9,7 @@ import Orcamentos from './Components/Orcamentos';
 import InsertOrcamento from './Components/InsertNewOrcamento';
 import UpdateOrcamento from './Components/UpdateOrcamento';
 import Imprimir from './Components/Imprimir';
+import Home from './Components/Home';
 function App() {
 
     const [login,setLogin] = useState([])
@@ -24,6 +25,7 @@ function App() {
      
       <div>
         <Routes>
+          <Route path='/' element={<Home/>}/>
           <Route index path='/login' element={<Login/>} />
           <Route  path='/clientes' element={<Clients/>} />
           <Route  path='/updateClients/:id' element={<UpdateClient/>} />

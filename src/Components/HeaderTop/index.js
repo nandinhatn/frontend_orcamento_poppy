@@ -1,10 +1,21 @@
 import react,{useContext, useState} from 'react';
 import Logo from '../../Assets/logopoppyalta-copy.png'
 import Logo1 from '../../Assets/poppy-icone.png';
-import {Container, Li,Menu,Ul, ImageLogo,ContainerLogo} from './style'
+import {
+    Container, 
+    Li,
+    Menu,
+    Ul, 
+    ImageLogo,
+    ContainerLogo
+} from './style'
 import {useNavigate} from 'react-router-dom'
 import api from '../Data/dates'
 import {MyContext}  from '../../MyContext'
+import {
+    FaSignOutAlt,
+    FaUsers,
+    FaDatabase} from 'react-icons/fa'
 const HeaderTop =()=>{
 
     const navigate = useNavigate()
@@ -38,9 +49,16 @@ const HeaderTop =()=>{
 <Menu>
     <Ul>
     
-        <Li onClick={()=> navigate('/clientes')}>Clientes</Li>
-        <Li onClick={()=> navigate('/orcamentos')}>Orçamento</Li>
-        <Li onClick={()=>logout()}>Sair</Li>
+        <Li onClick={()=> navigate('/clientes')}>
+            <FaUsers size={15}/>
+            Clientes</Li>
+        <Li onClick={()=> navigate('/orcamentos')}>
+            <FaDatabase/>
+            Orçamento</Li>
+        <Li onClick={()=>logout()}>
+
+            <FaSignOutAlt />
+            Sair</Li>
     </Ul>
 </Menu>
 </Container>

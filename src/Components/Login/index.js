@@ -33,7 +33,7 @@ const Login = ()=>{
                 console.log(res)
                 setLogin(res.data)
                 localStorage.setItem("token", res.data.token)
-              navigate('/clientes'); 
+              navigate('/'); 
             }
             console.log(res.data)
             if(!res.data.auth) {
