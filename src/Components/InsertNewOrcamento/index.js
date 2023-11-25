@@ -1,10 +1,16 @@
 import react,{useContext, useState, useEffect} from 'react';
 import {MyContext} from '../../MyContext'
-import {FormInsert, Input,ContainerTitle} from './style'
+import {
+    FormInsert, 
+    Input,
+    ContainerTitle,
+    ContainerCheck
+} from './style'
 import api from '../Data/dates'
 import {useNavigate} from 'react-router-dom'
 import { MdAppRegistration } from 'react-icons/md';
-
+import Buttons from '../Buttons';
+import ButtonDefault from '../ButtonsDefault';
 
 const InsertNewOrcamento = (props)=>{
 
@@ -110,16 +116,22 @@ Data de Entrega:
 <Input type='date' value={deliveryDate} onChange={(e)=> setDeliveryDate(e.target.value) }/>
 Descrição do Job:
 <textarea rows={10} value={description} onChange={(e)=> setDescription(e.target.value)}></textarea>
+<ContainerCheck>
 Concorrência:
 <input type='checkbox' checked={dispute} onChange={(e)=> setDispute(!dispute)} />
+</ContainerCheck>
+
 {/* o valor do integral esconde */}
 {dispute? 
 <>
 
 <Input value={minValue} onChange={(e)=> setMinValue(e.target.value)} placeholder='Valor Job Mínimo'/>
 <Input value={sucessValue} onChange={(e)=> setSucessValue(e.target.value)} placeholder='Valor do Job Máximo'/>
+<ContainerCheck>
 Concorrência venceu?
 <Input type="checkbox" checked={win} onChange={(e)=> setWin(!win)} />
+</ContainerCheck>
+
 {win? 
 <>
 Data do Evento:
@@ -131,14 +143,17 @@ Data do Evento:
 : <Input value={integralValue} onChange={(e)=> setIntegralValue(e.target.value)} placeholder='Valor do Job Integral'/>}
 
 
+<ContainerCheck>
+Orçamento Aprovado?    
+    <Input type="checkbox" checked={approved} onChange={(e)=> setApproved(!approved)} />
+</ContainerCheck>
 
-Orçamento Aprovado?
-<Input type="checkbox" checked={approved} onChange={(e)=> setApproved(!approved)} />
 
 
 
 
-<button onClick={()=> newOrcamento()} > Insert</button>
+<ButtonDefault action={()=> newOrcamento()} title="Inserir"/>
+
 </FormInsert>
         </>
     )
