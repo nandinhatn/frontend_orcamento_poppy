@@ -1,9 +1,23 @@
 import react, {useState, useEffect, useContext} from 'react';
 import {MyContext} from '../../MyContext'
-import {Container} from './style'
+import {
+    Container,
+    ContainerLogin,
+    Input,
+    ContainerIcon,
+    ContainerInput,
+    ContainerLogo,
+    ImageLogo,
+    Divisor,
+    TitleLogin,
+    ContainerMsg
+}
+     from './style'
 import api from '../Data/dates'
 import {Outlet,NavLink, useLocation, useNavigate} from 'react-router-dom'
-
+import ButtonDefault from '../ButtonsDefault';
+import {FaLock, FaUser} from 'react-icons/fa'
+import Logo from '../../Assets/poppy-icone.png'
 
 const Login = ()=>{
         const {login, setLogin} = useContext(MyContext)
@@ -35,15 +49,35 @@ const Login = ()=>{
     return(
         <>
         <Container>
-
-        <div>Login</div>
+        <ContainerLogin>
+        <ContainerLogo>
+            <ImageLogo src={Logo}/>
+            <Divisor></Divisor>
+            <TitleLogin>Login</TitleLogin>
+        </ContainerLogo>
      
         
+        <ContainerInput>
+            <ContainerIcon>
+            <FaUser/>
+            </ContainerIcon>
 
-        <input placeholder='Usuario' value={user} onChange={(e)=> setUser(e.target.value)}></input>
-        <input value={password} type='password' placeholder='Senha' onChange={(e)=> setPassword(e.target.value)}></input>
-        {user.length>0 && password.length>0 ? <button onClick={()=>getDadosLogin()}>Logar</button> : ''}
-        <p>{answerMsg}</p>
+     <Input placeholder='Usuario' value={user} onChange={(e)=> setUser(e.target.value)}/>
+        </ContainerInput>
+
+        <ContainerInput>
+        <ContainerIcon>
+        <FaLock/>
+</ContainerIcon>
+     <Input value={password} type='password' placeholder='Senha' onChange={(e)=> setPassword(e.target.value)}/>
+        </ContainerInput>
+     {user.length>0 && password.length>0 ?
+     <ButtonDefault title="Logar" action={()=> getDadosLogin()}/>
+      : ''}
+
+     <ContainerMsg>{answerMsg}</ContainerMsg>
+        </ContainerLogin>
+        
        
         
         </Container>

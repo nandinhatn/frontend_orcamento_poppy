@@ -12,6 +12,7 @@ import Imprimir from './Components/Imprimir';
 function App() {
 
     const [login,setLogin] = useState([])
+    console.log(login)
     
   return (
       <>
@@ -19,7 +20,8 @@ function App() {
      
     
       <BrowserRouter>
-       <HeaderTop></HeaderTop>
+      {login.length!=0  ?   <HeaderTop></HeaderTop> : ''}
+     
       <div>
         <Routes>
           <Route index path='/login' element={<Login/>} />
