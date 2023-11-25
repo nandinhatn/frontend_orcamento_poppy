@@ -2,7 +2,13 @@ import react, {useContext, useEffect, useState} from 'react';
 import { MyContext } from '../../MyContext';
 import api from '../Data/dates'
 import { NavLink, useLocation, redirect, useNavigate } from 'react-router-dom';
-import {Container,Lines, FormInsert,Titles,ContainerPlus} from './style'
+import {
+    Container,
+    Lines, 
+    Titles,
+    ContainerPlus,
+    ContainerTitles
+} from './style'
 import InsertNewClient from '../InsertNewClient';
 import UpdateClient from '../UpdateClient';
 
@@ -71,32 +77,32 @@ const Clients = ()=>{
 
     return(
         <>
+        <ContainerTitles>
         <Titles>Clientes</Titles>
            
       
-        <ContainerPlus>
-        {!exibInsert? <Buttons action={()=> insertNewClient()}type="add"/> : ''}
-        
-        </ContainerPlus>
-       
-        {exibInsert? <>
-            <ContainerPlus>
+           <ContainerPlus>
+           {!exibInsert? <Buttons action={()=> insertNewClient()}type="add"/> : ''}
+           
+           </ContainerPlus>
+          
+           {exibInsert? <>
+               <ContainerPlus>
+   
+               <Buttons action={()=> setExibInsert(!exibInsert)}type="close"/>
+               </ContainerPlus>
+               {<InsertNewClient getClients={getClients}/>}
+           </> : ''}
 
-            <Buttons action={()=> setExibInsert(!exibInsert)}type="close"/>
-            </ContainerPlus>
-            {<InsertNewClient getClients={getClients}/>}
-        </> : ''}
-
-       
-        {client?  <>
+           {client?  <>
         
         <Container>
 
         <Lines>ID</Lines>
         <Lines>Nome</Lines>
         <Lines>CNPJ</Lines>
-        <Lines></Lines>
-        <Lines></Lines>
+        <Lines>Alterar</Lines>
+        <Lines>Excluir</Lines>
         <Lines></Lines>
         {client.map((el)=> {return(
             <>
@@ -129,6 +135,11 @@ const Clients = ()=>{
            
 
         </div>
+        </ContainerTitles>
+      
+
+       
+       
         </>
     )
 

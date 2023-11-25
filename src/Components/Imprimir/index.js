@@ -19,7 +19,8 @@ import {
     Title,
     ContainerSignatures,
     ContainerSignaturesName,
-    ContainerButtons
+    ContainerButtons,
+    ContainerAddress
 } from './style'
 
 
@@ -57,9 +58,18 @@ const Imprimir= ()=>{
     const getOrcamento = ()=>{
         api.get(`/api/orcamento/${id}`, {headers:{'x-access-token': login.token}}).catch((e)=>{
             console.log(e)
+            if(e.request.status===500){
+                console.log('soliciona erro')
+            }
         }).then((res)=> {
-            console.log(res)
-            setOrcamento(res.data.response[0])
+          
+            if(res.response.request.status==500){
+                navigate('/login')
+            }
+            else{
+                console.log(res)
+                setOrcamento(res.data.response[0])
+            }
             
         })
         
@@ -67,6 +77,11 @@ const Imprimir= ()=>{
     const getClients = (id)=>{
         api.get(`/api/clients/${id}`,{headers:{'x-access-token': login.token}}).catch((e)=>{
             console.log(e)
+            if(e.request.status===500){
+                console.log('aqui esta errado')
+                navigate('/login')
+                
+            }
         }).then((res)=>{
             console.log(res)
             setClient(res.data.response[0])
@@ -106,12 +121,13 @@ const Imprimir= ()=>{
             <ContainerLogo>
                 <ImageLogo src={Logo}/>
             </ContainerLogo>
-            <ContainerLogo>
+            <ContainerAddress>
                 Poppy Web e 3d Ltda.<br></br>
-                fernanda@poppymidia.com.br
+                fernanda@poppymidia.com.br<br></br>
+                www.poppymidia.com.br
                 <br></br>
                 Telefone: 1196974-8216
-            </ContainerLogo>
+            </ContainerAddress>
             <ContainerNumber>
             Orçamento n.º
                 <NumberOrc>
@@ -145,9 +161,9 @@ const Imprimir= ()=>{
                 </ContainerOrcamento>
 
                
-                <Title>Valores</Title>
               
                 <ContainerOrcamento>
+                <Title>Valores</Title>
                 {!orcamento.dispute? <>
                     <div>Valor Integral</div> 
                <ContainerValues>{orcamento.integral_value}</ContainerValues>

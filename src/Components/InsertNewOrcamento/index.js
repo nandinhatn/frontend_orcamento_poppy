@@ -4,7 +4,9 @@ import {
     FormInsert, 
     Input,
     ContainerTitle,
-    ContainerCheck
+    ContainerCheck,
+    Textarea,
+
 } from './style'
 import api from '../Data/dates'
 import {useNavigate} from 'react-router-dom'
@@ -115,7 +117,7 @@ Data de Pagamento :
 Data de Entrega:
 <Input type='date' value={deliveryDate} onChange={(e)=> setDeliveryDate(e.target.value) }/>
 Descrição do Job:
-<textarea rows={10} value={description} onChange={(e)=> setDescription(e.target.value)}></textarea>
+<Textarea rows={10} value={description} onChange={(e)=> setDescription(e.target.value)}></Textarea>
 <ContainerCheck>
 Concorrência:
 <input type='checkbox' checked={dispute} onChange={(e)=> setDispute(!dispute)} />

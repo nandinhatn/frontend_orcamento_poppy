@@ -12,7 +12,13 @@ border: 1px solid #CCCCCC;
 
 `;
 
+
+
 export const Input = styled.input`
+&[type="date"]{
+    color: #555555;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
 border: 0;
 border-bottom: 1px solid gray;
 padding: 5px;
@@ -28,9 +34,10 @@ display: flex;
 justify-content: center;
 align-items: center;
 font-weight: bold;
-font-family: 'Roboto', sans-serif;
+font-family: Verdana, Geneva, Tahoma, sans-serif;
 
 `;
+
 
 export const ContainerCheck = styled.div`
 display: flex;
@@ -38,5 +45,13 @@ align-items: center;
 height: 20px;
 padding: 20px 0 20px 0;
 
+`;
+export const Textarea = styled.textarea`
+font-family: Verdana, Geneva, Tahoma, sans-serif;
+&:focus{
+    border: 1px solid #CCCCCC;
+    background-color: #CCCCCC;
+}
+outline: none;
 `;
 

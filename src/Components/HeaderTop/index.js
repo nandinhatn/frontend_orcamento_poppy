@@ -43,7 +43,7 @@ const HeaderTop =()=>{
         
 <ContainerLogo>
 
-<ImageLogo src={Logo1}/>
+<ImageLogo onClick={()=> navigate('/')} style={{cursor:'pointer'}} src={Logo1}/>
 </ContainerLogo>
 
 <Menu>

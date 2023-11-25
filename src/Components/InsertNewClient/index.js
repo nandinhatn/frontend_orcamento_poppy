@@ -3,7 +3,7 @@ import {MyContext} from '../../MyContext'
 import {FormInsert, Input,ContainerTitle} from './style'
 import api from '../Data/dates'
 import {useNavigate} from 'react-router-dom'
-
+import ButtonDefault from '../ButtonsDefault';
 
 const InsertNewClient = (props)=>{
 
@@ -43,7 +43,8 @@ const InsertNewClient = (props)=>{
 <Input value={email} onChange={(e)=> setEmail(e.target.value)} placeholder='Insira o Email' />
 </FormInsert>
 
-<button onClick={()=> newClient()} > Insert</button>
+
+<ButtonDefault action={()=> newClient()} title="Inserir Novo Cliente"/>
         </>
     )
 }
