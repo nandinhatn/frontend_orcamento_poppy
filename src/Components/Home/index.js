@@ -1,4 +1,4 @@
-import react from 'react';
+import react,{useContext, useEffect} from 'react';
 
 import {
     Container,
@@ -6,6 +6,7 @@ import {
     ContainerButton
 } from './style'
 import {useNavigate} from 'react-router-dom'
+import { MyContext } from '../../MyContext';
 
 
 import ButtonDefault from '../ButtonsDefault';
@@ -13,9 +14,18 @@ import ButtonDefault from '../ButtonsDefault';
 
 const Home =()=>{
     const navigate = useNavigate();
+    const {login,setLogin} = useContext(MyContext)
+
+     useEffect(()=>{
+        if(!login.auth){
+            navigate('/login')
+        }
+     },[login])
     return(
         <>
-        <Container>
+        {login.auth? 
+        <>
+           <Container>
             <ContainerContent>
                 Clientes
                 <ContainerButton>
@@ -31,6 +41,9 @@ const Home =()=>{
                 </ContainerButton>
             </ContainerContent>
         </Container>
+        </> : ''}
+      
+     
 
         </>
     )

@@ -25,6 +25,7 @@ display: flex;
 justify-content: center;
 align-items: center;
 font-weight: bold;
+
 font-family: Verdana, Geneva, Tahoma, sans-serif;
 
 `;

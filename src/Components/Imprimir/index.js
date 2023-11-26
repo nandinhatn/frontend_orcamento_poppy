@@ -56,20 +56,17 @@ const Imprimir= ()=>{
   }
 
     const getOrcamento = ()=>{
+        console.log(login.token)
         api.get(`/api/orcamento/${id}`, {headers:{'x-access-token': login.token}}).catch((e)=>{
             console.log(e)
-            if(e.request.status===500){
-                console.log('soliciona erro')
-            }
+            navigate('/login')
         }).then((res)=> {
-          
-            if(res.response.request.status==500){
-                navigate('/login')
-            }
-            else{
+             console.log(res)
+           
+           
                 console.log(res)
                 setOrcamento(res.data.response[0])
-            }
+            
             
         })
         
@@ -80,6 +77,7 @@ const Imprimir= ()=>{
             if(e.request.status===500){
                 console.log('aqui esta errado')
                 navigate('/login')
+                return
                 
             }
         }).then((res)=>{
@@ -87,7 +85,14 @@ const Imprimir= ()=>{
             setClient(res.data.response[0])
         })
     }
+    const formatDate = (date)=>{
+            const newDate= new Date(date)
+            const day = newDate.getDate()
+            const month = newDate.getMonth()
+            const year = newDate.getFullYear()
 
+            return `${day}/${month}/${year}`
+    }
 
     useEffect(()=>{
         getOrcamento()
@@ -113,7 +118,8 @@ const Imprimir= ()=>{
       }, [signature]);
     return(
         <>
-        {orcamento?
+        {login.auth? <>
+            {orcamento?
          <>
          <div id="container">
          <Container>
@@ -156,27 +162,27 @@ const Imprimir= ()=>{
                <div>Escopo do Projeto</div>
                <ContainerValues>{orcamento.description}</ContainerValues>
                <div>Data de Entrega</div>
-               <ContainerValues>{orcamento.delivery_date}</ContainerValues>
+               <ContainerValues>{formatDate(orcamento.delivery_date)}</ContainerValues>
              
                 </ContainerOrcamento>
 
                
               
-                <ContainerOrcamento>
                 <Title>Valores</Title>
+                <ContainerOrcamento>
                 {!orcamento.dispute? <>
                     <div>Valor Integral</div> 
-               <ContainerValues>{orcamento.integral_value}</ContainerValues>
+               <ContainerValues>R${orcamento.integral_value}</ContainerValues>
                 
                 </> : <>
                 <div>Valor Mínimo</div>
-                <ContainerValues>{orcamento.min_value}</ContainerValues>
+                <ContainerValues>R${orcamento.min_value}</ContainerValues>
                 <div>Valor Máximo</div>
-                <ContainerValues>{orcamento.sucess_value}</ContainerValues>
+                <ContainerValues>R${orcamento.sucess_value}</ContainerValues>
                 
                 </>}
                 <div>Data de Pagamento</div>
-                <ContainerValues>{orcamento.date_payment}</ContainerValues>
+                <ContainerValues>{formatDate(orcamento.date_payment)}</ContainerValues>
                
                 </ContainerOrcamento>
             </ContainerContent>
@@ -199,7 +205,7 @@ const Imprimir= ()=>{
       onEnd={handleSignatureEnd}
     /></div>
     <ContainerSignaturesName>
-    Fernanda Teixeira Nogueira Lisboa
+    {login.results.name}
 
     </ContainerSignaturesName>
                 </ContainerSignatures>
@@ -211,11 +217,18 @@ const Imprimir= ()=>{
           
            </div>
         </> :''}
-        <ContainerButtons>
-
-        <ButtonDefault title={"Donwlod Orçamento PDF"} action={downloadPdf}/>
+        {orcamento? <>
+            <ContainerButtons>
+            <ButtonDefault title={"Donwlod Orçamento PDF"} action={downloadPdf}/>
         <ButtonDefault title={"Limpar Assinatura"} action={()=>clearSignature()}/>
         </ContainerButtons>
+        </>: ''}
+      
+                
+        </> : ''}
+    
+       
+       
         </>
     )
 }

@@ -1,8 +1,17 @@
 import react,{useContext, useState, useEffect} from 'react';
 import {MyContext} from '../../MyContext'
-import {FormInsert, Input,ContainerTitle} from './style'
+import {
+    FormInsert, 
+    Input,
+    ContainerTitle,
+    ContainerButton,
+    Container
+
+} from './style'
 import api from '../Data/dates'
 import {useNavigate, useParams} from 'react-router-dom'
+import ButtonDefault from '../ButtonsDefault';
+
 
 
 const UpdateClient = (props)=>{
@@ -65,8 +74,9 @@ const UpdateClient = (props)=>{
     
     return(
         <>
-            <FormInsert>
-                <ContainerTitle>Alterar  Cliente- </ContainerTitle>
+        <Container>
+        <FormInsert>
+                <ContainerTitle>Alterar  Cliente</ContainerTitle>
 {clientSelected? 
 <>
 <Input value={name} onChange={(e)=> setName(e.target.value)} placeholder='Insira o nome do cliente' />
@@ -77,8 +87,14 @@ const UpdateClient = (props)=>{
 
 </FormInsert>
 
-<button onClick={()=> updateClient()} > Alterar Cliente</button>
-<button onClick={()=>  navigate('/clientes')} > Voltar</button>
+<ContainerButton>
+<ButtonDefault action={()=> navigate('/clientes')} title={"Voltar"}/>
+<ButtonDefault action={()=> updateClient()} title={'Alterar Cliente'}/>
+</ContainerButton>
+
+
+        </Container>
+         
 <p>{msg}</p>
         </>
     )

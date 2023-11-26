@@ -10,6 +10,7 @@ display: grid;
 
 margin-top: 20px;
 
+
 justify-content: space-around;
 border: 1px solid #CCCCCC;
 padding: 20px;
@@ -46,6 +47,9 @@ margin: 20px;
 border: 1px solid #CCCCCC;
 padding: 20px;
 color: #555555;
+
+
+
 
 font-family: Verdana, Geneva, Tahoma, sans-serif;
 `;

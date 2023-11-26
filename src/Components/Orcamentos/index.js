@@ -100,73 +100,78 @@ const Orcamentos = ()=>{
 
     return(
         <>
+        {login.auth ? 
+        <>
         <ContainerTitles>
 
-        <Titles>Orçamentos</Titles>
-        <ContainerPlus>
-        {!exibInsert? <Buttons action={()=> insertNewClient()}type="add"/> : ''}
-        
-        </ContainerPlus>
-        {exibInsert? <>
-            <ContainerPlus>
+<Titles>Orçamentos</Titles>
+<ContainerPlus>
+{!exibInsert? <Buttons action={()=> insertNewClient()}type="add"/> : ''}
 
-            <Buttons action={()=> setExibInsert(!exibInsert)}type="close"/>
-            </ContainerPlus>
-            {<InsertNewOrcamento getOrcamentos={getOrcamentos}/>}
-        </> : ''}
+</ContainerPlus>
+{exibInsert? <>
+    <ContainerPlus>
 
+    <Buttons action={()=> setExibInsert(!exibInsert)}type="close"/>
+    </ContainerPlus>
+    {<InsertNewOrcamento getOrcamentos={getOrcamentos}/>}
+</> : ''}
+
+
+{orcamento?  <>
+
+<Container>
+
+<Lines>ID</Lines>
+<Lines>Nome do Projeto</Lines>
+<Lines>Data de Entrada</Lines>
+<Lines>Aprovado</Lines>
+<Lines>Data de Entrega</Lines>
+<Lines>Alterar</Lines>
+<Lines>Excluir</Lines>
+<Lines>Imprimir</Lines>
+{orcamento.map((el)=> {return(
+    <>
+ 
+    <Lines>
+        {el.id_job} 
+    </Lines>
+    <Lines>
+        {el.project_name}
+    </Lines>  
+    <Lines>
+        {el.entry_date? formatDate(el.entry_date): ''}
        
-        {orcamento?  <>
-        
-        <Container>
+    </Lines>
+    <Lines>
+            { el.approved===0 ? <MdClose/>: <FaCheck/>}
+    </Lines>
+    <Lines>
+       {formatDate(el.delivery_date)}
+    </Lines>  
+    <Lines>
+    <Buttons action={()=> navigate(`/updateOrcamento/${el.id_job}`)} type={'edit'}/>
+    </Lines>
+    <Lines>
+     <Buttons action={()=> deleteOrcamento(el.id_job)} type={'delete'}/>
+    </Lines>  
+    <Lines>
+        <Buttons type={'print'} action={()=> navigate(`/imprimir/${el.id_job}`)}/>
+       </Lines>
+     </>
+)})}
+  </Container>
+</>
 
-        <Lines>ID</Lines>
-        <Lines>Nome do Projeto</Lines>
-        <Lines>Data de Entrada</Lines>
-        <Lines>Aprovado</Lines>
-        <Lines>Data de Entrega</Lines>
-        <Lines>Alterar</Lines>
-        <Lines>Excluir</Lines>
-        <Lines>Imprimir</Lines>
-        {orcamento.map((el)=> {return(
-            <>
-         
-            <Lines>
-                {el.id_job} 
-            </Lines>
-            <Lines>
-                {el.project_name}
-            </Lines>  
-            <Lines>
-                {el.entry_date? formatDate(el.entry_date): ''}
-               
-            </Lines>
-            <Lines>
-                    { el.approved===0 ? <MdClose/>: <FaCheck/>}
-            </Lines>
-            <Lines>
-               {formatDate(el.delivery_date)}
-            </Lines>  
-            <Lines>
-            <Buttons action={()=> navigate(`/updateOrcamento/${el.id_job}`)} type={'edit'}/>
-            </Lines>
-            <Lines>
-             <Buttons action={()=> deleteOrcamento(el.id_job)} type={'delete'}/>
-            </Lines>  
-            <Lines>
-                <Buttons type={'print'} action={()=> navigate(`/imprimir/${el.id_job}`)}/>
-               </Lines>
-             </>
-        )})}
-          </Container>
+: 'nao tem'}
+<div>
+   
+
+</div>
+</ContainerTitles>
         </>
-      
-        : 'nao tem'}
-        <div>
-           
+         : ''}
 
-        </div>
-        </ContainerTitles>
            
       
       

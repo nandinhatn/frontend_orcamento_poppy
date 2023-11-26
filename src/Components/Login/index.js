@@ -38,6 +38,7 @@ const Login = ()=>{
             console.log(res.data)
             if(!res.data.auth) {
                 console.log('login errado')
+                setLogin(res.data)
                 setAnswerMsg("Login Errado")
             }
         })

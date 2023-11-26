@@ -77,7 +77,9 @@ const Clients = ()=>{
 
     return(
         <>
-        <ContainerTitles>
+        {login.auth? 
+        <>
+            <ContainerTitles>
         <Titles>Clientes</Titles>
            
       
@@ -136,6 +138,10 @@ const Clients = ()=>{
 
         </div>
         </ContainerTitles>
+        
+        
+        </> : ''}
+    
       
 
        

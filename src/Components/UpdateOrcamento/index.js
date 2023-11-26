@@ -1,9 +1,17 @@
 import react,{useContext, useState, useEffect} from 'react';
 import {MyContext} from '../../MyContext'
-import {FormInsert, Input,ContainerTitle} from './style'
+import {
+    FormInsert, 
+    Input,
+    ContainerTitle,
+    ContainerButton,
+    Container,
+    ContainerCheck
+} from './style'
 import api from '../Data/dates'
 import {useNavigate, useParams} from 'react-router-dom'
 import { MdAppRegistration } from 'react-icons/md';
+import ButtonDefault from '../ButtonsDefault';
 
 
 const UpdateOrcamento = (props)=>{
@@ -70,29 +78,41 @@ const UpdateOrcamento = (props)=>{
     const getOrcamento=()=>{
         api.get(`/api/orcamento/${id}`,{headers:{'x-access-token': login.token}}).catch((e)=>{
             console.log(e)
+            navigate('/login')
+            return
         }).then((res)=>{
             console.log(res)
-            setOrcamento(res.data.response[0])
-            setClientId(res.data.response[0].client_id)
-            setColaborators(res.data.response[0].colaborators)
-            setDatePayment(res.data.response[0].date_payment)
-            setDeliveryDate(res.data.response[0].delivery_date)
-            setDescription(res.data.response[0].description)
-            setDataEvento(res.data.response[0].date_evento)
-            setDispute(res.data.response[0].dispute)
-            setEntryDate(res.data.response[0].entry_date)
-            setIntegralValue(res.data.response[0].integral_value)
-            setMinValue(res.data.response[0].min_value)
-            setProjectName(res.data.response[0].project_name)
-            setSucessValue(res.data.response[0].sucess_value)
-            setWin(res.data.response[0].win)
-            setApproved(res.data.response[0].approved) 
+            if(res){
+                console.log('*****' , res)
+                setOrcamento(res.data.response[0])
+                setClientId(res.data.response[0].client_id)
+                setColaborators(res.data.response[0].colaborators)
+                setDatePayment(res.data.response[0].date_payment)
+                setDeliveryDate(res.data.response[0].delivery_date)
+                setDescription(res.data.response[0].description)
+                setDataEvento(res.data.response[0].date_evento)
+                setDispute(res.data.response[0].dispute)
+                setEntryDate(res.data.response[0].entry_date)
+                setIntegralValue(res.data.response[0].integral_value)
+                setMinValue(res.data.response[0].min_value)
+                setProjectName(res.data.response[0].project_name)
+                setSucessValue(res.data.response[0].sucess_value)
+                setWin(res.data.response[0].win)
+                setApproved(res.data.response[0].approved) 
+            }
+            else{
+                navigate('/login')
+            }
+           
         })
     }
 
     const getClients= ()=>{
         api.get('/api/clients', {headers: {'x-access-token': login.token}}).catch((e)=>{
             console.log((e))
+            navigate('/login')
+            
+            return
             
         }).then((res)=> {
          setListClients(res.data.response) 
@@ -151,6 +171,10 @@ const UpdateOrcamento = (props)=>{
     }
     return(
         <>
+        {}
+        <Container>
+
+        
             <FormInsert>
                 <ContainerTitle>Alterar Orçamento</ContainerTitle>
 Nome do Cliente:
@@ -180,16 +204,22 @@ Data de Entrega:
 <Input type='date' value={formatDate(deliveryDate)} onChange={(e)=> setDeliveryDate(e.target.value) }/>
 Descrição do Job:
 <textarea rows={10} value={description} onChange={(e)=> setDescription(e.target.value)}></textarea>
+<ContainerCheck>
+
 Concorrência:
 <input type='checkbox' checked={dispute} onChange={(e)=> setDispute(!dispute)} />
+</ContainerCheck>
 {/* o valor do integral esconde */}
 {dispute? 
 <>
 
 <Input value={minValue} onChange={(e)=> setMinValue(e.target.value)} placeholder='Valor Job Mínimo'/>
 <Input value={sucessValue} onChange={(e)=> setSucessValue(e.target.value)} placeholder='Valor do Job Máximo'/>
+<ContainerCheck>
+
 Concorrência venceu?
 <Input type="checkbox" checked={win} onChange={(e)=> setWin(!win)} />
+</ContainerCheck>
 {win? 
 <>
 Data do Evento:
@@ -201,17 +231,24 @@ Data do Evento:
 : <Input value={integralValue} onChange={(e)=> setIntegralValue(e.target.value)} placeholder='Valor do Job Integral'/>}
 
 
-
+<ContainerCheck>
 Orçamento Aprovado?
 <Input type="checkbox" checked={approved} onChange={(e)=> setApproved(!approved)} />
+</ContainerCheck>
 
 
 
+<ContainerButton>
+<ButtonDefault title="Voltar" action={()=> navigate('/orcamentos')}/>
+<ButtonDefault title="Alterar Orçamento" action={()=> updateOrcamento()}/>
 
-<button onClick={()=> updateOrcamento()} > Alterar Orçamento</button>
-<button onClick={()=> navigate('/orcamento')} > Voltar</button>
+</ContainerButton>
+
+
+
 </FormInsert>
 <p>{msg}</p>
+</Container>
         </>
     )
 }

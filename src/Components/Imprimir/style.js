@@ -10,6 +10,7 @@ font-weight: 300;
 font-size: 14px;
 
 
+
 `;
 
 export const ContainerHeader = styled.div`
@@ -30,6 +31,7 @@ width: 200px;
 border: 1px solid black;
 border-top: 0;
 border-right:0;
+border-left: 0;
 `;
 
 export const ContainerNumber = styled.div`
@@ -80,7 +82,7 @@ height: 80px;
 
 export const ContainerContent = styled.div`
 border-bottom: 1px solid #555555;
-
+margin: 20px;
 padding: 10px;
 font-family: Verdana, Geneva, Tahoma, sans-serif;
 font-size: 14px;
@@ -91,21 +93,22 @@ display: grid;
 grid-template-columns: 2fr 8fr;
 padding: 20px;
 margin-bottom: 40px;
-border: 1px solid black;
+border: 1px solid #555555;
 
 `;
 export const ContainerValues = styled.div`
 display: flex;
 align-items: center;
 
-border-bottom: 1px solid black;
+border-bottom: 1px solid #555555;
 `;
 export const Title = styled.div`
 display: flex;
 justify-content: center;
 font-weight: bold;
 background-color: gray;
-margin: 10px;
+margin-bottom: 40px;
+
 padding: 10px 10px 10px 10px;
 `;
 
@@ -119,7 +122,7 @@ justify-content: center;
 
 `;
 export const ContainerSignaturesName = styled.div`
-border-top: 1px solid black;
+border-top: 1px solid #555555;
 margin-bottom: 40px;
 `;
 

@@ -20,6 +20,7 @@ const HeaderTop =()=>{
 
     const navigate = useNavigate()
     const {login, setLogin} = useContext(MyContext)
+    console.log(login)
     const logout=()=>{
         api.post('/logout').then((res)=> {
             
