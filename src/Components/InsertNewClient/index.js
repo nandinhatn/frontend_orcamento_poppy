@@ -15,12 +15,16 @@ const InsertNewClient = (props)=>{
     const newClient= ()=>{
         if(login.auth){
             api.post('/api/clients', {client_name: name, cnpj:cnpj, email:email}, {headers:{ 'x-access-token': `${login.token}`}}).catch((e)=>{
-                console.log(e)
+             
+                setLogin({})
             }).then((res)=>{
                 console.log(res)
                 if(res.status===200){
                     console.log('inserido com sucesso')
                     props.getClients()
+                    setCnpj('')
+                    setName('')
+                    setEmail('')
                  
                 }
             })

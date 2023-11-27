@@ -75,11 +75,12 @@ const InsertNewOrcamento = (props)=>{
 
     const getClients= ()=>{
         api.get('/api/clients', {headers: {'x-access-token': login.token}}).catch((e)=>{
-            console.log((e))
+           
+            setLogin({})
             
         }).then((res)=> {
          setListClients(res.data.response) 
-            console.log(res)})
+           })
     }
     useEffect(()=>{
         getClients()

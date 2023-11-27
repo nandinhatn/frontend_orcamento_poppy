@@ -37,13 +37,14 @@ const Orcamentos = ()=>{
      
             catch((e)=>{
                  
+                setLogin({})
                 
                   navigate('/login')
                   
                }).then((res)=> {
                    if(res){
                        setOrcamento(res.data.response)
-                       console.log(res)
+                       
                    }
                  }) 
         }
@@ -96,6 +97,12 @@ const Orcamentos = ()=>{
         getOrcamentos()
       
     },[])
+
+    useEffect(()=>{
+        if(!login.auth){
+            navigate('/login')
+        }
+    },[login])
          
 
     return(

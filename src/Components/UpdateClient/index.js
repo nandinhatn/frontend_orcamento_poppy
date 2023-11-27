@@ -30,11 +30,12 @@ const UpdateClient = (props)=>{
     const updateClient= ()=>{
         if(login.auth){
             api.put(`/api/clients/${id}`, {client_name: name, cnpj:cnpj, email:email, address: address}, {headers:{ 'x-access-token': `${login.token}`}}).catch((e)=>{
-                console.log(e)
+                
+                setLogin({})
             }).then((res)=>{
                 
                 if(res.status===200){
-                    console.log('alterado com sucesso')
+                  
                     setMsg("Alterado com sucesso")
                     
                  

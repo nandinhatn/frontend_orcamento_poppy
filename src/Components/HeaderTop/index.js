@@ -24,11 +24,11 @@ const HeaderTop =()=>{
     const logout=()=>{
         api.post('/logout').then((res)=> {
             
-            console.log(res)
+          
             setLogin(res.data)
             localStorage.clear()
 
-            navigate('./login')
+            navigate('/login')
         }
            
             )
@@ -36,7 +36,7 @@ const HeaderTop =()=>{
     console.log(login)
     return(
         <>
-        {login && login.auth==true ?
+        {login && login.auth===true ?
 
         <>
           <Container>
@@ -44,7 +44,7 @@ const HeaderTop =()=>{
         
 <ContainerLogo>
 
-<ImageLogo onClick={()=> navigate('/')} style={{cursor:'pointer'}} src={Logo1}/>
+<ImageLogo onClick={()=> navigate('/orcamento')} style={{cursor:'pointer'}} src={Logo1}/>
 </ContainerLogo>
 
 <Menu>

@@ -73,7 +73,7 @@ const Imprimir= ()=>{
     }
     const getClients = (id)=>{
         api.get(`/api/clients/${id}`,{headers:{'x-access-token': login.token}}).catch((e)=>{
-            console.log(e)
+         
             if(e.request.status===500){
                 console.log('aqui esta errado')
                 navigate('/login')
@@ -81,7 +81,7 @@ const Imprimir= ()=>{
                 
             }
         }).then((res)=>{
-            console.log(res)
+         
             setClient(res.data.response[0])
         })
     }
@@ -113,9 +113,7 @@ const Imprimir= ()=>{
        
     },[client])
 
-    useEffect(() => {
-        console.log(signature);
-      }, [signature]);
+    
     return(
         <>
         {login.auth? <>
@@ -138,7 +136,7 @@ const Imprimir= ()=>{
             Orçamento n.º
                 <NumberOrc>
              
-                400{orcamento.id_job}
+                {orcamento.id_job}
                 </NumberOrc>
          
             </ContainerNumber>

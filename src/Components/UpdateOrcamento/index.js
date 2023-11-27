@@ -55,9 +55,9 @@ const UpdateOrcamento = (props)=>{
                 sucess_value: sucessValue
 
             }, {headers:{ 'x-access-token': `${login.token}`}}).catch((e)=>{
-                console.log(e)
+               console.log(e)
             }).then((res)=>{
-                console.log(res)
+               
                 
                 if(res.status===200){
                     console.log('inserido com sucesso')
@@ -77,7 +77,7 @@ const UpdateOrcamento = (props)=>{
 
     const getOrcamento=()=>{
         api.get(`/api/orcamento/${id}`,{headers:{'x-access-token': login.token}}).catch((e)=>{
-            console.log(e)
+           
             navigate('/login')
             return
         }).then((res)=>{
@@ -109,14 +109,15 @@ const UpdateOrcamento = (props)=>{
 
     const getClients= ()=>{
         api.get('/api/clients', {headers: {'x-access-token': login.token}}).catch((e)=>{
-            console.log((e))
+           
+            setLogin({})
             navigate('/login')
             
             return
             
         }).then((res)=> {
          setListClients(res.data.response) 
-            console.log(res)})
+           })
     }
     useEffect(()=>{
         getClients()

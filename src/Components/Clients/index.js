@@ -37,7 +37,7 @@ const Clients = ()=>{
                }).then((res)=> {
                    if(res){
                        setClient(res.data.response)
-                       console.log(res)
+                      
                    }
                  }) 
         }
