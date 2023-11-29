@@ -76,22 +76,26 @@ const Orcamentos = ()=>{
         }
     }
 
-    const formatDate=(date)=>{
-        
-        const data = new Date(date)
-        const day = data.getDate()
-        const month = data.getMonth()
-        const year = data.getFullYear()
-
+    const formatDate=(data)=>{  
+        console.log(data)
       
-        if(date==="0000-00-00"){
-           return '- '
+        const date = new Date(data);
+        let day = date.getDate();
+        console.log(day)
+        let month = date.getMonth()+1
+        let year = date.getUTCFullYear()
+        if(month<10){
+            month= "0" + month;
         }
-        else{
-            return `${day}/${month}/${year}`;
+        if(day<10){
+            day = "0" + day
         }
-       
+        console.log(day + "," + month + ", " + year )
         
+        const dateFormated = `${day}-${month}-${year}`
+        console.log(dateFormated)
+       
+        return dateFormated
     }
     useEffect(()=>{
         getOrcamentos()
@@ -154,7 +158,7 @@ const Orcamentos = ()=>{
             { el.approved===0 ? <MdClose/>: <FaCheck/>}
     </Lines>
     <Lines>
-       {formatDate(el.delivery_date)}
+     {formatDate(el.delivery_date)}
     </Lines>  
     <Lines>
     <Buttons action={()=> navigate(`/updateOrcamento/${el.id_job}`)} type={'edit'}/>

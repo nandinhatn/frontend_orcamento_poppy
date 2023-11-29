@@ -4,7 +4,7 @@ export const Container = styled.div`
 border: 1px solid #555555;
 margin-top: 40px;
 margin-bottom:40px;
-width: 800px;
+width: 1300px;
 font-family: Verdana, Geneva, Tahoma, sans-serif;
 font-weight: 300;
 font-size: 14px;
@@ -27,7 +27,7 @@ padding: 20px;
 font-family: Verdana, Geneva, Tahoma, sans-serif;
 font-size: 14px;
 color: black;
-width: 200px;
+width: 410px;
 border: 1px solid black;
 border-top: 0;
 border-right:0;
@@ -38,7 +38,7 @@ export const ContainerNumber = styled.div`
 display: flex;
 align-items: center;
 flex-direction: column;
-width: 200px;
+width: 410px;
 
 border-bottom: 1px solid black;
 border-top: 0;

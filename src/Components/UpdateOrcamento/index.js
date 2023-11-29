@@ -23,7 +23,7 @@ const UpdateOrcamento = (props)=>{
     const [description,setDescription] = useState('') 
     const [dispute,setDispute] = useState(false) 
     const [entry_date,setEntryDate] = useState('') 
-    const [deliveryDate,setDeliveryDate] = useState('') 
+    const [deliveryDate,setDeliveryDate] = useState("2024-01-01") 
     const [integralValue,setIntegralValue] = useState('') 
     const [minValue,setMinValue] = useState('') 
     const [projectName, setProjectName] = useState('') 
@@ -81,14 +81,16 @@ const UpdateOrcamento = (props)=>{
             navigate('/login')
             return
         }).then((res)=>{
-            console.log(res)
+            console.log('********',res)
             if(res){
                 console.log('*****' , res)
+               
                 setOrcamento(res.data.response[0])
                 setClientId(res.data.response[0].client_id)
                 setColaborators(res.data.response[0].colaborators)
                 setDatePayment(res.data.response[0].date_payment)
-                setDeliveryDate(res.data.response[0].delivery_date)
+                setDeliveryDate(res.data.response[0].delivery_date) 
+               
                 setDescription(res.data.response[0].description)
                 setDataEvento(res.data.response[0].date_evento)
                 setDispute(res.data.response[0].dispute)
@@ -156,17 +158,26 @@ const UpdateOrcamento = (props)=>{
         console.log(win) 
     },[win])
     
-    const formatDate=(data)=>{  
+
+    const formatDate=(data, nome)=>{  
+      
+         console.log(data, nome)
+        
       
         const date = new Date(data);
-        const day = date.getDate();
-        const month = date.getMonth();
-        const year = date.getFullYear()
-
-        console.log(day + "," + month + ", " + year )
-        
+        let day = date.getDate();
+       
+        let month = date.getMonth()+1
+        let year = date.getUTCFullYear()
+        if(month<10){
+            month= "0" + month;
+        }
+        if(day<10){
+            day = "0" + day
+        }
+       
         const dateFormated = `${year}-${month}-${day}`
-        console.log(dateFormated)
+      
        
         return dateFormated
     }
@@ -198,11 +209,12 @@ Nome do Cliente:
 <Input value={projectName} onChange={(e)=> setProjectName(e.target.value)} placeholder='Nome do Projeto'/>
 <Input value={colaborators} onChange={(e)=> setColaborators(e.target.value)} placeholder='Colaborador' />
 Data de Entrada:
-<Input type='date'value={formatDate(entry_date)} onChange={(e)=> setEntryDate(e.target.value)} placeholder='Data de Entrada' />
+<Input type='date'value={formatDate(entry_date, "entry_date")} onChange={(e)=> setEntryDate(e.target.value)} placeholder='Data de Entrada' />
 Data de Pagamento :
-<Input type='date'value={formatDate(datePayment)} onChange={(e)=> setDatePayment(e.target.value)} placeholder='Data de Pagamento' />
+<Input type='date'value={formatDate(datePayment, "datePayment")} onChange={(e)=> setDatePayment(e.target.value)} placeholder='Data de Pagamento' />
+
 Data de Entrega:
-<Input type='date' value={formatDate(deliveryDate)} onChange={(e)=> setDeliveryDate(e.target.value) }/>
+<Input type='date' value={formatDate(deliveryDate, "deliveryDate")} onChange={(e)=> setDeliveryDate(e.target.value) }/>
 Descrição do Job:
 <textarea rows={10} value={description} onChange={(e)=> setDescription(e.target.value)}></textarea>
 <ContainerCheck>

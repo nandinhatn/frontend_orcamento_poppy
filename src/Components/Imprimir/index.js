@@ -44,7 +44,7 @@ const Imprimir= ()=>{
     filename: ""+fileName + ".pdf",
     page: {
       margin: 20,
-      format:'letter'
+      format:'A4'
     }
   };
   const getTargetElement = () => document.getElementById("container");
@@ -57,6 +57,7 @@ const Imprimir= ()=>{
 
     const getOrcamento = ()=>{
         console.log(login.token)
+        console.log(login)
         api.get(`/api/orcamento/${id}`, {headers:{'x-access-token': login.token}}).catch((e)=>{
             console.log(e)
             navigate('/login')
@@ -86,9 +87,12 @@ const Imprimir= ()=>{
         })
     }
     const formatDate = (date)=>{
+            console.log(date)
             const newDate= new Date(date)
-            const day = newDate.getDate()
-            const month = newDate.getMonth()
+            const day = newDate.getUTCDate()
+            console.log(day)
+            const month = newDate.getMonth()+1 
+            console.log(month)
             const year = newDate.getFullYear()
 
             return `${day}/${month}/${year}`
@@ -170,13 +174,13 @@ const Imprimir= ()=>{
                 <ContainerOrcamento>
                 {!orcamento.dispute? <>
                     <div>Valor Integral</div> 
-               <ContainerValues>R${orcamento.integral_value}</ContainerValues>
+               <ContainerValues>R${orcamento.integral_value.toFixed(2)}</ContainerValues>
                 
                 </> : <>
                 <div>Valor Mínimo</div>
-                <ContainerValues>R${orcamento.min_value}</ContainerValues>
+                <ContainerValues>R${orcamento.min_value.toFixed(2)}</ContainerValues>
                 <div>Valor Máximo</div>
-                <ContainerValues>R${orcamento.sucess_value}</ContainerValues>
+                <ContainerValues>R${orcamento.sucess_value.toFixed(2)}</ContainerValues>
                 
                 </>}
                 <div>Data de Pagamento</div>
@@ -203,7 +207,8 @@ const Imprimir= ()=>{
       onEnd={handleSignatureEnd}
     /></div>
     <ContainerSignaturesName>
-    {login.results.name}
+        {login.results[0].name}
+
 
     </ContainerSignaturesName>
                 </ContainerSignatures>

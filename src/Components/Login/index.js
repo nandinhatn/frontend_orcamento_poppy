@@ -33,7 +33,7 @@ const Login = ()=>{
              
                 setLogin(res.data)
                 localStorage.setItem("token", res.data.token)
-              navigate('/orcamento'); 
+              navigate('/orcamentos'); 
             }
             
             if(!res.data.auth) {
